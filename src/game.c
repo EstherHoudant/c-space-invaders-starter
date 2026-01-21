@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include "game.h"
+#include "enemies.h"
 #include <stdio.h>
 
 bool init(SDL_Window **window, SDL_Renderer **renderer)
@@ -57,14 +58,24 @@ void handle_input(bool *running, const Uint8 *keys, Entity *player, Entity *bull
     }
 }
 
-void update(Entity *player, Entity *bullet, bool *bullet_active, float dt)
+void update(Entity *player, Horde *E, Entity *bullet, bool *bullet_active, float dt)
 {
     player->x += player->vx * dt;
+
 
     if (player->x < 0)
         player->x = 0;
     if (player->x + player->w > SCREEN_WIDTH)
         player->x = SCREEN_WIDTH - player->w;
+    
+    for(int i=0;i<10;i++){
+    E->enemies[i].y += E->enemies[i].vy * dt;
+    if (E->enemies[i].y < 0)
+        E->enemies[i].y = 0;
+    if (E->enemies[i].y + E->enemies[i].h > SCREEN_HEIGHT)
+        E->enemies[i].y = SCREEN_HEIGHT - E->enemies[i].h;
+        
+    }
 
     if (*bullet_active)
     {
@@ -74,7 +85,7 @@ void update(Entity *player, Entity *bullet, bool *bullet_active, float dt)
     }
 }
 
-void render(SDL_Renderer *renderer, Entity *player, Entity *bullet, bool bullet_active)
+void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, bool bullet_active)
 {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
@@ -84,6 +95,15 @@ void render(SDL_Renderer *renderer, Entity *player, Entity *bullet, bool bullet_
         player->w, player->h};
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
     SDL_RenderFillRect(renderer, &player_rect);
+    
+    for(int i=0;i<10;i++){  
+    SDL_Rect enemies_rect = {
+        (int)E->enemies[i].x, (int)E->enemies[i].y,
+        E->enemies[i].w, E->enemies[i].h};
+    
+    SDL_SetRenderDrawColor(renderer, 0, 0, 155, 255);
+    SDL_RenderFillRect(renderer, &enemies_rect);
+    }
 
     if (bullet_active)
     {
