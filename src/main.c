@@ -33,7 +33,7 @@ int main(void)
         .w = PLAYER_WIDTH/1.2,
         .h = PLAYER_HEIGHT,
         .vx = 0,
-        .vy = 10};
+        .vy = 10,};
 
         int a=0;
         for(int i=0;i<10;i++){

@@ -83,9 +83,10 @@ void update(Entity *player, Horde *E, Entity *bullet, bool *bullet_active, float
         if (bullet->y + bullet->h < 0)
             *bullet_active = false;
     }
+    
 }
 
-void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, bool bullet_active)
+void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, bool *bullet_active)
 {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
@@ -95,15 +96,8 @@ void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, bo
         player->w, player->h};
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
     SDL_RenderFillRect(renderer, &player_rect);
+
     
-    for(int i=0;i<10;i++){  
-    SDL_Rect enemies_rect = {
-        (int)E->enemies[i].x, (int)E->enemies[i].y,
-        E->enemies[i].w, E->enemies[i].h};
-    
-    SDL_SetRenderDrawColor(renderer, 0, 0, 155, 255);
-    SDL_RenderFillRect(renderer, &enemies_rect);
-    }
 
     if (bullet_active)
     {
@@ -114,7 +108,25 @@ void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, bo
         SDL_RenderFillRect(renderer, &bullet_rect);
     }
 
+    
+    if (*bullet_active){
+        for(int i=0;i<10;i++){
+        if (E->enemies[i].y-bullet->y<2){
+           E.enemies[i].alive=false; 
+        }
+    }
+    }
+
+    for(int i=0;i<10;i++){
+        if(E->enemies[i].alive=true){  
+         SDL_Rect enemies_rect = {
+          (int)E->enemies[i].x, (int)E->enemies[i].y,
+          E->enemies[i].w, E->enemies[i].h};
+         SDL_SetRenderDrawColor(renderer, 0, 0, 155, 255);
+         SDL_RenderFillRect(renderer, &enemies_rect);
+
     SDL_RenderPresent(renderer);
+    };
 }
 
 void cleanup(SDL_Window *window, SDL_Renderer *renderer)
