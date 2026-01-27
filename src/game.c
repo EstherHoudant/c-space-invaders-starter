@@ -139,7 +139,7 @@ void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, bo
     }
    
 
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 20; i++)
     {
         if (E->enemies[i].alive == true)
         {

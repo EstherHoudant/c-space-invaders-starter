@@ -23,41 +23,48 @@ int main(void)
         .w = PLAYER_WIDTH,
         .h = PLAYER_HEIGHT,
         .vx = 0,
-        .vy = 0,    
-        .life=1
-    };
-        
+        .vy = 0,
+        .life = 1};
 
-// on ne peut pas retourner un tableau donc pas d'étape intermédiaire qui remplit le tableau
-
+    // on ne peut pas retourner un tableau donc pas d'étape intermédiaire qui remplit le tableau
 
     Horde E = {
-        .w = PLAYER_WIDTH/1.2,
+        .w = PLAYER_WIDTH / 1.2,
         .h = PLAYER_HEIGHT,
         .vx = 0,
-        .vy = 10,};
+        .vy = 10,
+    };
 
-        int a=0;
-        for(int i=0;i<20;i++){
-            E.enemies[i].y=0;
-            if(a<SCREEN_WIDTH){
-                E.enemies[i].x=a;
-                a=a+100;}
-            else{
-                E.enemies[i].x=SCREEN_WIDTH-E.enemies[i].w;
-            
-            };
-        for (int i=0;i<10;i++){
-            E.enemies[i].y=100;
+    int a = 0;
+    for (int i = 0; i < 10; i++)
+    {
+        E.enemies[i].y = SCREEN_HEIGHT/2;
+    }
+    for (int i = 0; i < 20; i++)
+    {  
+        E.enemies[i].w = 50;
+        if (a < SCREEN_WIDTH)
+        {
+            E.enemies[i].x = a;
+            a = a + 100;
+            if(i==7){ // je m'arrête avant 10 pour que la condition a<screen width soit toujours vérifiée
+                a=0;
+            }
+        
         }
-            E.enemies[i].vx=0;
-            E.enemies[i].vy=30;
-            E.enemies[i].h=30;
-            E.enemies[i].w=50;
-            E.enemies[i].alive=true;
-        }
+        else
+        {   
+            E.enemies[i].x = 0/*SCREEN_WIDTH - E.enemies[i].w*/;
+        };
+        E.enemies[i].vx = 0;
+        E.enemies[i].vy = 30;
+        E.enemies[i].h = 30;
+        E.enemies[i].alive = true;
+    }
 
-    Entity bullet = {0}; //met 0 partout pour bullet
+    
+
+    Entity bullet = {0}; // met 0 partout pour bullet
     bool bullet_active = false;
 
     while (running)
@@ -71,8 +78,8 @@ int main(void)
         SDL_PumpEvents();
         const Uint8 *keys = SDL_GetKeyboardState(NULL);
         handle_input(&running, keys, &player, &bullet, &bullet_active);
-        update(&player,&E, &bullet, &bullet_active, dt);
-        render(renderer, &player, &E,&bullet, &bullet_active,&running);
+        update(&player, &E, &bullet, &bullet_active, dt);
+        render(renderer, &player, &E, &bullet, &bullet_active, &running);
     }
 
     cleanup(window, renderer);
