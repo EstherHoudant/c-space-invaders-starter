@@ -4,7 +4,7 @@
 
 typedef struct
 {
-    Entity enemies[10];
+    Entity enemies[20];
     float vx, vy;
     int w, h;
 } Horde;

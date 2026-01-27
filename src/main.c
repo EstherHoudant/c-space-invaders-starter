@@ -23,8 +23,10 @@ int main(void)
         .w = PLAYER_WIDTH,
         .h = PLAYER_HEIGHT,
         .vx = 0,
-        .vy = 0};
-    
+        .vy = 0,    
+        .life=1
+    };
+        
 
 // on ne peut pas retourner un tableau donc pas d'étape intermédiaire qui remplit le tableau
 
@@ -36,7 +38,8 @@ int main(void)
         .vy = 10,};
 
         int a=0;
-        for(int i=0;i<10;i++){
+        for(int i=0;i<20;i++){
+            E.enemies[i].y=0;
             if(a<SCREEN_WIDTH){
                 E.enemies[i].x=a;
                 a=a+100;}
@@ -44,6 +47,9 @@ int main(void)
                 E.enemies[i].x=SCREEN_WIDTH-E.enemies[i].w;
             
             };
+        for (int i=0;i<10;i++){
+            E.enemies[i].y=100;
+        }
             E.enemies[i].vx=0;
             E.enemies[i].vy=30;
             E.enemies[i].h=30;
@@ -66,7 +72,7 @@ int main(void)
         const Uint8 *keys = SDL_GetKeyboardState(NULL);
         handle_input(&running, keys, &player, &bullet, &bullet_active);
         update(&player,&E, &bullet, &bullet_active, dt);
-        render(renderer, &player, &E,&bullet, &bullet_active);
+        render(renderer, &player, &E,&bullet, &bullet_active,&running);
     }
 
     cleanup(window, renderer);
