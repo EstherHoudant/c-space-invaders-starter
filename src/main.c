@@ -47,7 +47,9 @@ int main(void)
             E.enemies[i].vx=0;
             E.enemies[i].vy=30;
             E.enemies[i].h=30;
-            E.enemies[i].w=50;}
+            E.enemies[i].w=50;
+            E.enemies[i].alive=true;
+        }
 
     Entity bullet = {0}; //met 0 partout pour bullet
     bool bullet_active = false;
@@ -64,7 +66,7 @@ int main(void)
         const Uint8 *keys = SDL_GetKeyboardState(NULL);
         handle_input(&running, keys, &player, &bullet, &bullet_active);
         update(&player,&E, &bullet, &bullet_active, dt);
-        render(renderer, &player, &E,&bullet, bullet_active);
+        render(renderer, &player, &E,&bullet, &bullet_active);
     }
 
     cleanup(window, renderer);

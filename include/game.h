@@ -20,8 +20,9 @@
 bool init(SDL_Window **window, SDL_Renderer **renderer);
 void handle_input(bool *running, const Uint8 *keys, Entity *player, Entity *bullet, bool *bullet_active);
 void update(Entity *player, Horde *E, Entity *bullet, bool *bullet_active, float dt);
-void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, bool bullet_active);
+void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, bool *bullet_active);
+
 void cleanup(SDL_Window *window, SDL_Renderer *renderer);
-void impact()
+void impact();
 
 #endif

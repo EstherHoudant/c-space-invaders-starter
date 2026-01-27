@@ -111,23 +111,33 @@ void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, bo
     
     if (*bullet_active){
         for(int i=0;i<10;i++){
-        if (E->enemies[i].y-bullet->y<2){
-           E.enemies[i].alive=false; 
+         if ((-E->enemies[i].y+bullet->y)<2 && (fabs(bullet->x-E->enemies[i].x))<10 ){
+           E->enemies[i].alive=false; 
         }
     }
     }
+    // rédaction d'une fonction qui tue le joueur
+/*  
+if (E->enemies[i].y-player->y<2){
+           player->life=player->life-1; 
+        }*/
 
     for(int i=0;i<10;i++){
-        if(E->enemies[i].alive=true){  
+        if(E->enemies[i].alive==true){  
          SDL_Rect enemies_rect = {
           (int)E->enemies[i].x, (int)E->enemies[i].y,
           E->enemies[i].w, E->enemies[i].h};
          SDL_SetRenderDrawColor(renderer, 0, 0, 155, 255);
          SDL_RenderFillRect(renderer, &enemies_rect);
-
+    }
     SDL_RenderPresent(renderer);
-    };
 }
+}
+
+// rédaction d'une fonction qui tue le joueur
+/*if (E->enemies[i].y-player->y<2){
+           player->life=player->life-1; 
+        }*/
 
 void cleanup(SDL_Window *window, SDL_Renderer *renderer)
 {
