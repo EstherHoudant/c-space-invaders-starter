@@ -103,7 +103,7 @@ void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, bo
         float y_p=player->y+player->h/2;
     if(fabs(x_p-x_)<player->w/2 && fabs(y_p-y_)<player->h/2){
     player->life=player->life-1;
-    }
+    }}
 
     
     SDL_Rect player_rect = {
@@ -136,8 +136,15 @@ void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, bo
         }
     }
     
-    }
    
+    //fonction qui affiche les vies 
+    for (int i=0;i<player->life;i++){
+        SDL_Rect life_rect ={
+            (int) SCREEN_WIDTH -100+i*30, (int) SCREEN_HEIGHT -80,
+            20,20};
+        SDL_SetRenderDrawColor(renderer, 128, 0, 128, 255);
+        SDL_RenderFillRect(renderer, &life_rect);
+    }
 
     for (int i = 0; i < 20; i++)
     {

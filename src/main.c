@@ -24,7 +24,7 @@ int main(void)
         .h = PLAYER_HEIGHT,
         .vx = 0,
         .vy = 0,
-        .life = 1};
+        .life = 3};
 
     // on ne peut pas retourner un tableau donc pas d'étape intermédiaire qui remplit le tableau
 
