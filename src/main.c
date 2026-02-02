@@ -48,7 +48,7 @@ int main(void)
             E.enemies[i].x = a;
             a = a + 100;
             if(i==7){ // je m'arrête avant 10 pour que la condition a<screen width soit toujours vérifiée
-                a=-30;
+                a=-40;
             }
         
         }
@@ -66,6 +66,9 @@ int main(void)
 
     Entity bullet = {0}; // met 0 partout pour bullet
     bool bullet_active = false;
+    
+    Entity bullet_enemy={0};
+    bool bullet_enemy_active=false;
 
     while (running)
     {
@@ -78,8 +81,8 @@ int main(void)
         SDL_PumpEvents();
         const Uint8 *keys = SDL_GetKeyboardState(NULL);
         handle_input(&running, keys, &player, &bullet, &bullet_active);
-        update(&player, &E, &bullet, &bullet_active, dt);
-        render(renderer, &player, &E, &bullet, &bullet_active, &running);
+        update(&player, &E, &bullet, &bullet_enemy,&bullet_active, dt,&bullet_enemy_active);
+        render(renderer, &player, &E, &bullet,&bullet_enemy, &bullet_active, &running,&bullet_enemy_active);
     }
 
     cleanup(window, renderer);
