@@ -138,7 +138,10 @@ void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, bo
             float x_ = x + (E->enemies[i].w + bullet->w) / 2;
             float y = E->enemies[i].y;
             float y_ = y + (E->enemies[i].h) / 2;
-            if (fabs(bullet->y - y_) < E->enemies[i].h / 2 && fabs(bullet->x - x_) < E->enemies[i].w + bullet->w / 2)
+            //on place aussi les coordonnées de la bullet en son centre
+            float y_bullet=bullet->y+bullet->h/2;
+            float x_bullet=bullet->x+bullet->w/2;
+            if (fabs(y_bullet - y_) < E->enemies[i].h / 2 && fabs(x_bullet - x_) < E->enemies[i].w )
             {
                 E->enemies[i].alive = false;
             }
