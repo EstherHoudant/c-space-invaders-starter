@@ -94,7 +94,7 @@ void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, bo
         *running = false;
     }
 
-    // fonction qui fait varier les points de vie(life) du joueur
+    // fonction qui tue le joueur car touché par un alien
     for (int i = 0; i < 20; i++)
     {
         float x = E->enemies[i].x;
