@@ -110,7 +110,7 @@ void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, bo
     }
     // fonction qui tues le player si les aliens arrivent en bas de l'écran
     for (int i = 0; i < 20; i++)
-    {if (E->enemies[i].y==SCREEN_HEIGHT-PLAYER_HEIGHT/2){
+    {if (E->enemies[i].y==SCREEN_HEIGHT-ENEMIES_HEIGHT){ //cette condition ne marche pas tout le temps, je ne comprends pas pourquoi
         player->life=0;
     }
     }

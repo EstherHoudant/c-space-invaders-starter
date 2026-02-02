@@ -48,7 +48,7 @@ int main(void)
             E.enemies[i].x = a;
             a = a + 100;
             if(i==7){ // je m'arrête avant 10 pour que la condition a<screen width soit toujours vérifiée
-                a=0;
+                a=-30;
             }
         
         }
