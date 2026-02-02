@@ -85,9 +85,10 @@ void update(Entity *player, Horde *E, Entity *bullet, Entity *bullet_enemy, bool
     if (*bullet_enemy_active)
     {
         bullet_enemy->y += bullet_enemy->vy * dt;
-        if (bullet_enemy->y + bullet_enemy->h < 0)
+        if (bullet_enemy->y > SCREEN_HEIGHT){
             *bullet_enemy_active = false;
-    }
+            bullet_enemy->vy=0;
+    }}
 }
 
 void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, Entity *bullet_enemy, bool *bullet_active, bool *running, bool *bullet_enemy_active)
@@ -128,7 +129,7 @@ void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, En
     // fonction qui tues le player si les aliens arrivent en bas de l'écran
     for (int i = 0; i < 20; i++)
     {
-        if (E->enemies[i].y == SCREEN_HEIGHT - ENEMIES_HEIGHT)
+        if (E->enemies[i].y >= abs(SCREEN_HEIGHT - ENEMIES_HEIGHT))
         { // cette condition ne marche pas tout le temps, je ne comprends pas pourquoi
             player->life = 0;
         }
@@ -148,7 +149,7 @@ void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, En
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_RenderFillRect(renderer, &bullet_rect);
     }
-    if(bullet_enemy_active){
+    if(*bullet_enemy_active){
        SDL_Rect bullet_enemy_rect = {
             (int)bullet_enemy->x, (int)bullet_enemy->y,
             bullet_enemy->w, bullet_enemy->h};
@@ -175,9 +176,9 @@ void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, En
         }
     }
     // fonction qui permet aux ennemis de tirer
-    if (*bullet_enemy_active)
+    if (*bullet_enemy_active &&bullet_enemy->vy==0)
     {
-        int numero = 6;
+        for (int numero=6;numero<20;numero+=3){
         if (E->enemies[numero].alive == true)
         {
             bullet_enemy->x = E->enemies[numero].x + E->enemies[numero].w / 2 - BULLET_WIDTH / 2;
@@ -186,9 +187,6 @@ void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, En
             bullet_enemy->h = BULLET_HEIGHT;
             bullet_enemy->vy = BULLET_SPEED;
         }
-        else
-        {
-            numero = numero + 1; //pour la seconde fois ou l'on appelle cette fonction
         }
     }
 
