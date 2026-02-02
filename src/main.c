@@ -29,8 +29,8 @@ int main(void)
     // on ne peut pas retourner un tableau donc pas d'étape intermédiaire qui remplit le tableau
 
     Horde E = {
-        .w = PLAYER_WIDTH / 1.2,
-        .h = PLAYER_HEIGHT,
+        .w = ENEMIES_WIDTH,
+        .h = ENEMIES_HEIGHT,
         .vx = 0,
         .vy = 10,
     };
