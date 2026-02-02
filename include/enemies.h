@@ -8,7 +8,7 @@ typedef struct
     float vx, vy;
     int w, h;
 } Horde;
-//on veut une grille d'ennemis : il faut définir un char ?
+
 
 #endif
 //on peut appeler position si c'est un sous argument de personnage mais seulement si c'est le premie argument

@@ -84,33 +84,42 @@ void update(Entity *player, Horde *E, Entity *bullet, bool *bullet_active, float
     }
 }
 
-void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, bool *bullet_active,bool *running)
+void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, bool *bullet_active, bool *running)
 {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
-    if (player->life==0){
-        *running=false; 
+    if (player->life == 0)
+    {
+        *running = false;
     }
 
-    //fonction qui fait varier les points de vie(life) du joueur
-    for (int i = 0; i < 20; i++){
-        float x= E->enemies[i].x;
-        float x_=x+(E->enemies[i].w+bullet->w)/2; 
+    // fonction qui fait varier les points de vie(life) du joueur
+    for (int i = 0; i < 20; i++)
+    {
+        float x = E->enemies[i].x;
+        float x_ = x + (E->enemies[i].w + bullet->w) / 2;
         float y = E->enemies[i].y;
-        float y_=y+(E->enemies[i].h)/2;
-        float x_p=player->x+player->w/2;
-        float y_p=player->y+player->h/2;
-    if(fabs(x_p-x_)<player->w/2 && fabs(y_p-y_)<player->h/2){
-    player->life=player->life-1;
-    }}
+        float y_ = y + (E->enemies[i].h) / 2;
+        float x_p = player->x + player->w / 2;
+        float y_p = player->y + player->h / 2;
+        if (fabs(x_p - x_) < player->w / 2 && fabs(y_p - y_) < player->h / 2)
+        {
+            player->life = 0;
+        }
+    }
+    // fonction qui tues le player si les aliens arrivent en bas de l'écran
+    for (int i = 0; i < 20; i++)
+    {if (E->enemies[i].y==SCREEN_HEIGHT-PLAYER_HEIGHT/2){
+        player->life=0;
+    }
+    }
 
-    
     SDL_Rect player_rect = {
         (int)player->x, (int)player->y,
         player->w, player->h};
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-    SDL_RenderFillRect(renderer, &player_rect); 
+    SDL_RenderFillRect(renderer, &player_rect);
 
     if (bullet_active)
     {
@@ -120,28 +129,28 @@ void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, bo
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_RenderFillRect(renderer, &bullet_rect);
     }
-// fonction qui entraîne le décès d'un ennemi
+    // fonction qui entraîne le décès d'un ennemi
     if (*bullet_active)
     {
         for (int i = 0; i < 20; i++)
         {
-            float x= E->enemies[i].x;
-            float x_=x+(E->enemies[i].w+bullet->w)/2; 
+            float x = E->enemies[i].x;
+            float x_ = x + (E->enemies[i].w + bullet->w) / 2;
             float y = E->enemies[i].y;
-            float y_=y+(E->enemies[i].h)/2;
-            if (fabs(bullet->y-y_)<E->enemies[i].h/2 && fabs(bullet->x-x_)<E->enemies[i].w+bullet->w/2)
+            float y_ = y + (E->enemies[i].h) / 2;
+            if (fabs(bullet->y - y_) < E->enemies[i].h / 2 && fabs(bullet->x - x_) < E->enemies[i].w + bullet->w / 2)
             {
                 E->enemies[i].alive = false;
             }
         }
     }
-    
-   
-    //fonction qui affiche les vies 
-    for (int i=0;i<player->life;i++){
-        SDL_Rect life_rect ={
-            (int) SCREEN_WIDTH -100+i*30, (int) SCREEN_HEIGHT -80,
-            20,20};
+
+    // fonction qui affiche les vies
+    for (int i = 0; i < player->life; i++)
+    {
+        SDL_Rect life_rect = {
+            (int)SCREEN_WIDTH - 100 + i * 30, (int)SCREEN_HEIGHT - 80,
+            20, 20};
         SDL_SetRenderDrawColor(renderer, 128, 0, 128, 255);
         SDL_RenderFillRect(renderer, &life_rect);
     }
@@ -156,12 +165,9 @@ void render(SDL_Renderer *renderer, Entity *player, Horde *E, Entity *bullet, bo
             SDL_SetRenderDrawColor(renderer, 0, 0, 155, 255);
             SDL_RenderFillRect(renderer, &enemies_rect);
         }
-        
     }
     SDL_RenderPresent(renderer);
 }
-
-
 
 void cleanup(SDL_Window *window, SDL_Renderer *renderer)
 {
